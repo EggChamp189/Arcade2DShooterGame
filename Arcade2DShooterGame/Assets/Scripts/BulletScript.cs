@@ -3,11 +3,15 @@ using UnityEngine;
 public class BulletScript : MonoBehaviour
 {
     float moveSpeed = 0f;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    public void SetupBullet(Vector3 position, Quaternion rotation, float speed)
+    // hiding this value since changing it from the inspector will do nothing.
+    [HideInInspector]
+    public float damage = 0f;
+
+    public void SetupBullet(Vector3 position, Quaternion rotation, float speed, float damage)
     {
         transform.SetPositionAndRotation(position, rotation);
         moveSpeed = speed;
+        this.damage = damage;
     }
 
     // Update is called once per frame

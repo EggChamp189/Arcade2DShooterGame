@@ -1,13 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerScript : MonoBehaviour
 {
+    public Slider healthBar;
+
+    [Header("Player Stats")]
+    public float maxHealth = 5f;
+    public float health;
+    // shouldn't actually affect the bullets yet
+    public float bulletDamage = 5f;
+    public float bulletSpeed = 7f;
+
     [Header("Movement Variables")]
     public float speedChange = 6f;
     public float maxSpeed = 15f;
     Vector2 desiredDirection = Vector2.zero;
+    float turnSpeed = 2.5f;
 
     [Header("Bullet Variables")]
     public float fireRate = 1.0f;
@@ -21,7 +32,10 @@ public class PlayerScript : MonoBehaviour
 
     private void Start()
     {
+
         rb = GetComponent<Rigidbody2D>();
+        health = maxHealth;
+        healthBar.value = health / maxHealth;
     }
 
     void Update()
@@ -30,11 +44,11 @@ public class PlayerScript : MonoBehaviour
         // get the desired move direction
         desiredDirection = orientation.up * Input.GetAxisRaw("Vertical") + orientation.right * Input.GetAxisRaw("Horizontal");
         if (Input.GetKey(KeyCode.Q)) {
-            transform.Rotate(Vector3.forward, 1.5f);
+            transform.Rotate(Vector3.forward, turnSpeed);
         }
         if (Input.GetKey(KeyCode.E))
         {
-            transform.Rotate(Vector3.forward, -1.5f);
+            transform.Rotate(Vector3.forward, -turnSpeed);
         }
 
         if (lastFired >= fireRate) {
@@ -42,7 +56,7 @@ public class PlayerScript : MonoBehaviour
             FindFirstObjectByType<SoundManager>().PlaySound("LazerFired");
             foreach (GameObject pos in firingPositions) {
                 BulletScript curBullet = Instantiate(bullet).GetComponent<BulletScript>();
-                curBullet.SetupBullet(pos.transform.position, transform.rotation, 7f);
+                curBullet.SetupBullet(pos.transform.position, transform.rotation, bulletSpeed, bulletDamage);
             }
         }
     }
@@ -61,6 +75,19 @@ public class PlayerScript : MonoBehaviour
         // else, rapidly lower the speed
         else {
             rb.linearVelocity = rb.linearVelocity * 0.95f;
+        }
+    }
+
+    public void TakeDamage(float damage) {
+        health -= damage;
+        healthBar.value = health / maxHealth;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag.Equals("Enemy"))
+        {
+            TakeDamage(1f);
         }
     }
 }

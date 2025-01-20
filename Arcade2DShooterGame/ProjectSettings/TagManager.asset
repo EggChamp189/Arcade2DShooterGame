@@ -5,15 +5,16 @@ TagManager:
   serializedVersion: 3
   tags:
   - PBullet
+  - Enemy
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
-  - 
-  - 
+  - PlayerBullets
+  - Enemy
   - 
   - 
   - 
