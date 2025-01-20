@@ -39,9 +39,10 @@ public class PlayerScript : MonoBehaviour
 
         if (lastFired >= fireRate) {
             lastFired = 0;
+            FindFirstObjectByType<SoundManager>().PlaySound("LazerFired");
             foreach (GameObject pos in firingPositions) {
                 BulletScript curBullet = Instantiate(bullet).GetComponent<BulletScript>();
-                curBullet.SetupBullet(pos.transform.position, transform.rotation, 5f);
+                curBullet.SetupBullet(pos.transform.position, transform.rotation, 7f);
             }
         }
     }
