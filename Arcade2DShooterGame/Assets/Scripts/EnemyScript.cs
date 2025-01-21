@@ -22,6 +22,7 @@ public class EnemyScript : MonoBehaviour
 
     private void CheckDead() {
         if (health <= 0) {
+            FindFirstObjectByType<PlayerScript>().UpdateScore(100);
             Destroy(gameObject);
         }
     }

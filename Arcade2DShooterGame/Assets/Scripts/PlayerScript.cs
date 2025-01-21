@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerScript : MonoBehaviour
 {
     public Slider healthBar;
+    public TMP_Text score;
 
     [Header("Player Stats")]
     public float maxHealth = 5f;
@@ -13,6 +15,7 @@ public class PlayerScript : MonoBehaviour
     // shouldn't actually affect the bullets yet
     public float bulletDamage = 5f;
     public float bulletSpeed = 7f;
+    public int scoreNum = 0;
 
     [Header("Movement Variables")]
     public float speedChange = 6f;
@@ -35,7 +38,8 @@ public class PlayerScript : MonoBehaviour
 
         rb = GetComponent<Rigidbody2D>();
         health = maxHealth;
-        healthBar.value = health / maxHealth;
+        TakeDamage(0);
+        UpdateScore(0);
     }
 
     void Update()
@@ -81,6 +85,11 @@ public class PlayerScript : MonoBehaviour
     public void TakeDamage(float damage) {
         health -= damage;
         healthBar.value = health / maxHealth;
+    }
+
+    public void UpdateScore(int num) {
+        scoreNum += num;
+        score.text = "Score: " + scoreNum;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
