@@ -12,7 +12,6 @@ public class PlayerScript : MonoBehaviour
     [Header("Player Stats")]
     public float maxHealth = 5f;
     public float health;
-    // shouldn't actually affect the bullets yet
     public float bulletDamage = 5f;
     public float bulletSpeed = 7f;
     public int scoreNum = 0;
@@ -22,6 +21,7 @@ public class PlayerScript : MonoBehaviour
     public float maxSpeed = 15f;
     Vector2 desiredDirection = Vector2.zero;
     float turnSpeed = 2.5f;
+    public bool mouseTurningOn = false;
 
     [Header("Bullet Variables")]
     public float fireRate = 1.0f;
@@ -35,7 +35,6 @@ public class PlayerScript : MonoBehaviour
 
     private void Start()
     {
-
         rb = GetComponent<Rigidbody2D>();
         health = maxHealth;
         TakeDamage(0);
@@ -47,12 +46,11 @@ public class PlayerScript : MonoBehaviour
         lastFired += Time.deltaTime;
         // get the desired move direction
         desiredDirection = orientation.up * Input.GetAxisRaw("Vertical") + orientation.right * Input.GetAxisRaw("Horizontal");
-        if (Input.GetKey(KeyCode.Q)) {
-            transform.Rotate(Vector3.forward, turnSpeed);
-        }
-        if (Input.GetKey(KeyCode.E))
+        if (mouseTurningOn)
         {
-            transform.Rotate(Vector3.forward, -turnSpeed);
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 directionToMove = (Vector2)mousePos - (Vector2)transform.position;
+            transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(directionToMove.y, directionToMove.x) * Mathf.Rad2Deg - 90);
         }
 
         if (lastFired >= fireRate) {
@@ -85,6 +83,9 @@ public class PlayerScript : MonoBehaviour
     public void TakeDamage(float damage) {
         health -= damage;
         healthBar.value = health / maxHealth;
+        if (health <= 0) {
+            FindFirstObjectByType<MidGameUiScript>().Die();
+        }
     }
 
     public void UpdateScore(int num) {
