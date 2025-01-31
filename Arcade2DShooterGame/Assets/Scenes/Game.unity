@@ -5136,6 +5136,15 @@ MonoBehaviour:
   - name: LazerFired
     sound: {fileID: 8300000, guid: f78da5056cf4fc1439a294cc58ecaa67, type: 3}
     recVolume: 1
+  - name: LazerHit
+    sound: {fileID: 8300000, guid: abb7ab88cbb9f0d41ac4f3e72f4de14b, type: 3}
+    recVolume: 1
+  - name: PlayerHit
+    sound: {fileID: 8300000, guid: 96a9dd5f0ab82264ab76184e2d2e98a3, type: 3}
+    recVolume: 1
+  - name: WeirdoAlienKilled
+    sound: {fileID: 8300000, guid: ce27e158743a95c49a52126e7c163baf, type: 3}
+    recVolume: 1
 --- !u!4 &161235632
 Transform:
   m_ObjectHideFlags: 0

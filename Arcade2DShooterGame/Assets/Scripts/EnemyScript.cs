@@ -14,14 +14,17 @@ public class EnemyScript : MonoBehaviour
         if(collision.tag.Equals("PBullet"))
         {
             health -= collision.GetComponent<BulletScript>().damage;
-            // add extra damage effects here if wanted later
+            // add more damage effects here if wanted later
+            FindFirstObjectByType<SoundManager>().PlaySound("LazerHit");
             Destroy(collision.gameObject);
         }
         CheckDead();
     }
 
     private void CheckDead() {
-        if (health <= 0) {
+        if (health <= 0)
+        {
+            FindFirstObjectByType<SoundManager>().PlaySound("WeirdoAlienKilled");
             FindFirstObjectByType<PlayerScript>().UpdateScore(100);
             Destroy(gameObject);
         }

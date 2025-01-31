@@ -37,7 +37,7 @@ public class PlayerScript : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         health = maxHealth;
-        TakeDamage(0);
+        healthBar.value = health / maxHealth;
         UpdateScore(0);
     }
 
@@ -83,6 +83,7 @@ public class PlayerScript : MonoBehaviour
     public void TakeDamage(float damage) {
         health -= damage;
         healthBar.value = health / maxHealth;
+        FindFirstObjectByType<SoundManager>().PlaySound("PlayerHit");
         if (health <= 0) {
             FindFirstObjectByType<MidGameUiScript>().Die();
         }
