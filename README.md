@@ -6,6 +6,6 @@ Arcadio 2: The Revenge, also known as Arcadio 1, starts a new journey with all n
 - LAZER BEAM
 
 Fight the Weirdo Aliens off with the power of Lazer Beam! 
-Also use Q and E to rotate your ship!
+Use a mouse to aim!
 
 Play Now: https://eggchamp189.github.io/Arcade2DShooterGame/
